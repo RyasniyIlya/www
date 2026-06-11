@@ -2,6 +2,11 @@ name: Pipeline
 
 on: [push, pull_request]
 
+# Кажемо серверу, що всі команди за замовчуванням виконуються в папці www
+defaults:
+  run:
+    working-directory: www
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,31 +26,26 @@ jobs:
         with:
           version: 9
 
-      # 3. Налаштовуємо Node.js
+      # 3. Налаштовуємо Node.js та зв'язуємо з кешем (тепер він спрацює!)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: www/pnpm-lock.yaml # Явно вказуємо шлях до локфайлу
 
       # 4. Встановлюємо залежності
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      # 5. ХИТРИЙ ТРЮК: Якщо Tailwind Oxide все одно не знайшовся, примусово ставимо його версію для Linux
-      - name: Force install Tailwind Oxide for Linux
-        run: pnpm add -D @tailwindcss/oxide-linux-x64-gnu
-
-      # 6. Запуск збірки проекту
+      # 5. Запуск збірки проекту
       - name: Run build
         run: pnpm run build
 
-      # 7. Автоматично рівняємо відступи
-      - name: Fix and check formatting
-        run: |
-          pnpm run format:all || npx prettier --write .
-          npx prettier --check .
+      # 6. Перевірка форматування коду
+      - name: Run format
+        run: pnpm run format:check:all
 
-      # 8. Перевірка лінтера
+      # 7. Перевірка лінтера
       - name: Run lint
         run: pnpm run lint:all
