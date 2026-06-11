@@ -11,35 +11,25 @@ jobs:
         node-version: [18.x, 20.x]
 
     steps:
-      # 1. Завантажуємо код проекту
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      # 2. Встановлюємо офіційний екшен для PNPM (це виправить помилку Tailwind Oxide!)
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9 # Вказує актуальну версію pnpm
-
-      # 3. Налаштовуємо Node.js та зв'язуємо її з кешем pnpm
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          node-version: ${{matrix.node-version}}
 
-      # 4. Встановлюємо залежності чисто й без суворих обмежень локфайлу
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
 
-      # 5. Запуск збірки проекту
       - name: Run build
-        run: pnpm run build
+        run: npm run build
 
-      # 6. Перевірка форматування коду
       - name: Run format
-        run: pnpm run format:check:all
+        run: npm run format:check:all
 
-      # 7. Перевірка лінтера (ESLint)
       - name: Run lint
-        run: pnpm run lint:allpnpm run format:all
+        run: npm run lint:all
