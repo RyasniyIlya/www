@@ -91,6 +91,7 @@ Also, to see how the compiled version of the program looks, you can use the scri
 ```shell
 npm run preview
 ```
+
 # Description of Added Technologies
 
 During the implementation of the test task, the following dependencies were added to the project:
