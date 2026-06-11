@@ -28,14 +28,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      # 4. ВИПРАВЛЕНО: Додали вертикальну риску |, щоб YAML не ламався на фігурних дужках
-      - name: Configure pnpm architecture for Tailwind Oxide
-        run: |
-          pnpm config set supportedArchitectures --json '{"os": ["linux"], "cpu": ["x64"]}'
-
-      # 5. Встановлюємо залежності
+      # 4. Встановлюємо залежності
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+
+      # 5. ХИТРИЙ ТРЮК: Якщо Tailwind Oxide все одно не знайшовся, примусово ставимо його версію для Linux
+      - name: Force install Tailwind Oxide for Linux
+        run: pnpm add -D @tailwindcss/oxide-linux-x64-gnu
 
       # 6. Запуск збірки проекту
       - name: Run build
