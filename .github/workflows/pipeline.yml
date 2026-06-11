@@ -2,50 +2,35 @@ name: Pipeline
 
 on: [push, pull_request]
 
-# Кажемо серверу, що всі команди за замовчуванням виконуються в папці www
-defaults:
-  run:
-    working-directory: www
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
-      # 1. Завантажуємо код
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Налаштовуємо офіційний PNPM
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      # 3. Налаштовуємо Node.js та зв'язуємо з кешем (тепер він спрацює!)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: www/pnpm-lock.yaml # Явно вказуємо шлях до локфайлу
+          node-version: 20
 
-      # 4. Встановлюємо залежності
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      # 5. Запуск збірки проекту
+      - name: Force Tailwind Oxide for Linux
+        run: pnpm add -D @tailwindcss/oxide-linux-x64-gnu
+
       - name: Run build
         run: pnpm run build
 
-      # 6. Перевірка форматування коду
       - name: Run format
         run: pnpm run format:check:all
 
-      # 7. Перевірка лінтера
       - name: Run lint
         run: pnpm run lint:all
