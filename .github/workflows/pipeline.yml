@@ -11,25 +11,32 @@ jobs:
         node-version: [18.x, 20.x]
 
     steps:
+      # 1. Завантажуємо код проекту на сервер (оновили до актуальної v4)
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
+      # 2. Налаштовуємо Node.js (оновили до актуальної v4)
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{matrix.node-version}}
+          node-version: ${{ matrix.node-version }}
 
+      # 3. Встановлюємо пакетний менеджер pnpm
       - name: Install pnpm
         run: npm install -g pnpm
 
+      # 4. Встановлюємо залежності (додали прапорець, щоб pnpm точно завантажив бінарники Tailwind)
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
+      # 5. Виправили: запускаємо збірку саме через pnpm, а не npm!
       - name: Run build
-        run: npm run build
+        run: pnpm run build
 
+      # 6. Перевірка форматування коду через pnpm
       - name: Run format
-        run: npm run format:check:all
+        run: pnpm run format:check:all
 
+      # 7. Перевірка лінтера (ESLint) через pnpm
       - name: Run lint
-        run: npm run lint:all
+        run: pnpm run lint:all
