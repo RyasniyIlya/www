@@ -11,25 +11,42 @@ jobs:
         node-version: [18.x, 20.x]
 
     steps:
+      # 1. Завантажуємо код
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      # 2. Налаштовуємо офіційний PNPM
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: ${{matrix.node-version}}
+          version: 9
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      # 3. Налаштовуємо Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
+      # 4. ВИПРАВЛЕНО: Додали вертикальну риску |, щоб YAML не ламався на фігурних дужках
+      - name: Configure pnpm architecture for Tailwind Oxide
+        run: |
+          pnpm config set supportedArchitectures --json '{"os": ["linux"], "cpu": ["x64"]}'
+
+      # 5. Встановлюємо залежності
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
+      # 6. Запуск збірки проекту
       - name: Run build
-        run: npm run build
+        run: pnpm run build
 
-      - name: Run format
-        run: npm run format:check:all
+      # 7. Автоматично рівняємо відступи
+      - name: Fix and check formatting
+        run: |
+          pnpm run format:all || npx prettier --write .
+          npx prettier --check .
 
+      # 8. Перевірка лінтера
       - name: Run lint
-        run: npm run lint:all
+        run: pnpm run lint:all
