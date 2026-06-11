@@ -1,3 +1,4 @@
 /tmp
 pnpm-lock.yaml
 /.pnpm-store
+.github/workflows/
