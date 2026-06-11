@@ -1,0 +1,49 @@
+{
+  "home": {
+    "openFilters": "Open Filters",
+    "activeFilters": "Active filters:"
+  },
+  "common": {
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "filters": {
+    "title": "Filters",
+    "groups": {
+      "MEAL_OPTIONS": { "name": "Meal options", "desc": "Choose the type of dining" },
+      "RULES_POLICIES_PAYMENT": { "name": "Rules, Policies, and Payment" },
+      "FACILITIES": { "name": "Facilities", "desc": "Room and hotel facilities" },
+      "BED_TYPE": { "name": "Bed type", "desc": "Choose the preferred bed type" },
+      "HEALTH_ENTERTAINMENT_SPORTS": { "name": "Health, Entertainment, and Sports" }
+    },
+    "options": {
+      "breakfast": { "name": "Breakfast included", "desc": "The stay comes with a complimentary morning meal." },
+      "lunch": { "name": "Lunch included", "desc": "Enjoy a midday meal included with your stay." },
+      "dinner": { "name": "Dinner included", "desc": "Evening meals are provided as part of your package." },
+      "all-inclusive": { "name": "All inclusive", "desc": "Covers all meals and drinks during your stay." },
+      "free-cancellation": { "name": "Free cancellation", "desc": "Option to cancel your booking without charges." },
+      "pets-allowed": { "name": "Pets allowed", "desc": "Accommodations are pet-friendly." },
+      "non-smoking-room": { "name": "Non-Smoking room", "desc": "Rooms designated as smoke-free." },
+      "private-bathroom": { "name": "Private bathroom", "desc": "Room includes an exclusive bathroom." },
+      "air-conditioning": { "name": "Air conditioning", "desc": "Equipped with a cooling system." },
+      "heating": { "name": "Heating", "desc": "Features a heating system to keep the room warm." },
+      "coffee-tea-maker": { "name": "Coffee/Tea maker", "desc": "Facilities to make coffee or tea." },
+      "shuttle-service": { "name": "Shuttle service", "desc": "Transportation services available." },
+      "wi-fi": { "name": "Wi-Fi", "desc": "Wireless internet access available." },
+      "parking": { "name": "Parking", "desc": "Provides space for parking your vehicle." },
+      "pool": { "name": "Pool", "desc": "Access to a swimming pool." },
+      "twin-beds": { "name": "Twin beds", "desc": "Two separate single beds." },
+      "double-bed": { "name": "Double Bed", "desc": "One large bed designed for two people." },
+      "gym": { "name": "Gym", "desc": "A well-equipped fitness center." },
+      "spa": { "name": "Spa", "desc": "A facility offering health and beauty treatments." },
+      "sauna": { "name": "Sauna", "desc": "A room for dry or wet heat sessions." }
+    }
+  },
+  "confirm": {
+    "title": "Confirm Changes",
+    "message": "Are you sure you want to save and apply the selected filters?"
+  }
+}
+
